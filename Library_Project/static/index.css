@@ -1,0 +1,39 @@
+body{
+    background-color:rgb(152, 156, 155);
+}
+
+#head {
+    margin-top: 2%;
+    color: green;
+    margin-bottom: 2%;
+    padding-left: 27%;
+}
+
+#forms {
+    padding-left: 15%;
+    padding-right: 15%;
+    font-weight: bold;
+    font-size: larger;
+}
+
+button {
+    display: block;
+    width: 100px;
+    margin: 0 auto;
+    background-color: blue;
+    color: white;
+}
+
+.generated_password{
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    /* Adjust height as needed */
+}

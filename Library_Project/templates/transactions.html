@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>Check in/out</title>
+{% endblock %}
+
+{% block content %}
+<div class="container justify-content-center">
+    <h1>Book Record Management</h1>
+</div>
+
+<div class="container justify-content-center">
+    <form method="post">
+        <div class="form-group pb-2">
+            <label for="user_uid">User UID</label>
+            <input type="text" class="form-control" id="uid_user" name="user_uid" placeholder="Enter user UID">
+            <button class="btn btn-outline-secondary" type="button" onclick="fetchUID('uid_user')">Read UID</button>
+        </div>
+        <div class="form-group pb-2">
+            <label for="book_uid">Book UID</label>
+            <input type="text" class="form-control" id="uid_book" placeholder="Book UID" name="book_uid">
+            <button class="btn btn-outline-secondary" type="button" onclick="fetchUID('uid_book')">Read UID</button>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<h2 style="text-align: center;">Library Transactions History</h2>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>User</th>
+                        <th>Book</th>
+                        <th>Action</th>
+                        <th>Date Borrowed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.user.name }}</td>
+                        <td>{{ transaction.book.title }}</td>
+                        <td>{{ transaction.action }}</td>
+                        <td>{{ transaction.timestamp.strftime('%Y-%m-%d') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    /// The fetchUID() function fetches the UID from the flask server at the /get_uid endpoint, 
+    /// processes the JSON response, and updates the text of an HTML element (with the ID uid)
+    /// to display the retrieved UID.
+    function fetchUID(targetInputId) {
+        fetch('/get_uid')
+            .then(response => response.json())
+            .then(data => {
+                if (data.uid) {
+                    document.getElementById(targetInputId).value = data.uid;
+                } else {
+                    alert("No UID detected");
+                }
+            })
+            .catch(error => console.error('Error fetching UID:', error));
+    }
+</script>
+
+{% endblock %}
